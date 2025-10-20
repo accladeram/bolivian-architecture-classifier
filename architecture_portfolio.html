@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolivian Architecture Classification System | ML Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --olive-pastel: #a8b5a1;
+            --beige: #e8dcc4;
+            --sage: #c8d5b9;
+            --cream: #f5f1e8;
+            --dark-text: #3a3a3a;
+            --accent: #7a8c72;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background: var(--cream);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--olive-pastel) 0%, var(--sage) 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--accent);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--accent);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        /* Overview */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .overview-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tech-item h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        /* Metrics */
+        .metrics {
+            background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Results Gallery */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .result-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: scale(1.03);
+        }
+
+        .result-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .result-info {
+            padding: 20px;
+        }
+
+        .result-info h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .confidence {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Architecture Diagram */
+        .architecture {
+            background: white;
+        }
+
+        .flow-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: var(--beige);
+            padding: 25px 30px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* Process Timeline */
+        .timeline {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .timeline-content h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--accent);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer a {
+            color: var(--beige);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            section {
+                padding: 50px 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <h1>Bolivian Architecture Classification System</h1>
+            <p class="subtitle">Computer Vision Model for Identifying Traditional Bolivian Architectural Styles</p>
+            
+            <div class="badges">
+                <span class="badge">Python</span>
+                <span class="badge">AWS S3</span>
+                <span class="badge">Stable Diffusion</span>
+                <span class="badge">Roboflow</span>
+                <span class="badge">Machine Learning</span>
+                <span class="badge">98.1% Accuracy</span>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="https://universe.roboflow.com/cloudcompute-sh6kq/architecture-classification-system-mdwfq" target="_blank" class="btn btn-primary">🚀 View Live Project</a>
+                <a href="#results" class="btn btn-secondary">📊 See Results</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview Section -->
+    <section class="overview">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <p class="section-subtitle">An end-to-end computer vision system for architectural heritage classification</p>
+            
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h3>🎯 Challenge</h3>
+                    <p>Develop an automated system to identify and classify traditional Bolivian architectural styles, including indigenous Cholet buildings, Adobe houses, Standard residential homes, and modern Buildings - preserving cultural heritage through AI.</p>
+                </div>
+                <div class="overview-card">
+                    <h3>💡 Solution</h3>
+                    <p>Built a custom object detection model using Roboflow 3.0, integrating AWS S3 for scalable data storage and Stable Diffusion for synthetic data generation to augment the training dataset.</p>
+                </div>
+                <div class="overview-card">
+                    <h3>✨ Impact</h3>
+                    <p>Achieved 98.1% precision and 96.5% recall across 721 annotated images, enabling automated architectural analysis for urban planning, cultural preservation, and real estate applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack">
+        <div class="container">
+            <h2 class="section-title">Technology Stack</h2>
+            <p class="section-subtitle">Modern cloud-native tools for scalable ML development</p>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">☁️</div>
+                    <h4>AWS S3</h4>
+                    <p>Cloud storage for dataset management</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🎨</div>
+                    <h4>Stable Diffusion</h4>
+                    <p>Synthetic image generation</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🤖</div>
+                    <h4>Roboflow</h4>
+                    <p>ML platform for training & deployment</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🐍</div>
+                    <h4>Python + Boto3</h4>
+                    <p>Data pipeline automation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics -->
+    <section class="metrics">
+        <div class="container">
+            <h2 class="section-title">Key Metrics</h2>
+            <p class="section-subtitle">Performance results demonstrating model effectiveness</p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">98.1%</div>
+                    <div class="metric-label">Precision</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">96.5%</div>
+                    <div class="metric-label">Recall</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">721</div>
+                    <div class="metric-label">Images Trained</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4</div>
+                    <div class="metric-label">Architecture Classes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="architecture">
+        <div class="container">
+            <h2 class="section-title">System Architecture</h2>
+            <p class="section-subtitle">End-to-end data pipeline and model workflow</p>
+            
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <strong>Data Sources</strong>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">Internet + S3 + Stable Diffusion</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Annotation</strong>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">Manual labeling in Roboflow</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Training</strong>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">Roboflow 3.0 Fast Model</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Deployment</strong>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">Cloud-hosted inference</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process">
+        <div class="container">
+            <h2 class="section-title">Development Process</h2>
+            <p class="section-subtitle">Systematic approach from data collection to model deployment</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h4>Data Collection & Storage</h4>
+                        <p>Gathered 721 images from multiple sources including public repositories and internet sources. Stored dataset in AWS S3 bucket for scalable access and integrated with Roboflow for automated batch uploading.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h4>Synthetic Data Generation</h4>
+                        <p>Implemented Stable Diffusion in SageMaker Studio Lab to generate additional training images, addressing class imbalance and expanding dataset diversity for more robust model training.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h4>Image Annotation</h4>
+                        <p>Manually labeled all images using Roboflow's annotation tools (Polygon, Smart Polygon, Bounding Box) to define 4 architectural classes: Cholet, Adobe, Standard, and Building.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h4>Model Training & Evaluation</h4>
+                        <p>Trained Roboflow 3.0 Fast model with 100 epochs, 16 batch size, and 80/10/10 train/validation/test split. Achieved 98.1% precision and 96.5% recall through iterative optimization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="results">
+        <div class="container">
+            <h2 class="section-title">Model Predictions</h2>
+            <p class="section-subtitle">Real-world classification examples showcasing model accuracy</p>
+            
+            <div class="results-grid">
+                <div class="result-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23a8b5a1' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3EBuilding Detection%3C/text%3E%3C/svg%3E" alt="Building classification">
+                    <div class="result-info">
+                        <h4>Edificio (Building)</h4>
+                        <p class="confidence">Confidence: 83%</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Modern high-rise building successfully detected with precise bounding box localization.</p>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23c8d5b9' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3ECholet Detection%3C/text%3E%3C/svg%3E" alt="Cholet classification">
+                    <div class="result-info">
+                        <h4>Cholet</h4>
+                        <p class="confidence">Confidence: 87%</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Traditional Andean architecture recognized with distinctive color patterns and structural elements.</p>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23e8dcc4' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3EAdobe Detection%3C/text%3E%3C/svg%3E" alt="Adobe classification">
+                    <div class="result-info">
+                        <h4>Adobe House</h4>
+                        <p class="confidence">Confidence: 88%</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Traditional adobe construction identified by characteristic earthen materials and rural setting.</p>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%237a8c72' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3EStandard Detection%3C/text%3E%3C/svg%3E" alt="Standard house classification">
+                    <div class="result-info">
+                        <h4>Estándar (Standard House)</h4>
+                        <p class="confidence">Confidence: 88%</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Contemporary residential architecture classified with high confidence and accurate localization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="https://universe.roboflow.com/cloudcompute-sh6kq/architecture-classification-system-mdwfq" target="_blank" class="btn btn-primary">Try the Model with Your Own Images</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learnings -->
+    <section class="learnings" style="background: var(--beige);">
+        <div class="container">
+            <h2 class="section-title">Key Technical Learnings</h2>
+            <p class="section-subtitle">Insights gained throughout the project lifecycle</p>
+            
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h3>⚖️ Class Imbalance</h3>
+                    <p>The Edificio class had 396 annotations vs 197 for Estándar, requiring careful monitoring for potential bias. Implemented data augmentation and synthetic generation to address this challenge.</p>
+                </div>
+                <div class="overview-card">
+                    <h3>🔄 Cloud Integration</h3>
+                    <p>Successfully orchestrated AWS S3, Roboflow API, and Stable Diffusion across multiple cloud platforms, demonstrating proficiency in distributed ML workflows.</p>
+                </div>
+                <div class="overview-card">
+                    <h3>🎯 Model Selection</h3>
+                    <p>Chose Roboflow 3.0 Fast model balancing inference speed with accuracy requirements. Optimal for real-time architectural analysis applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Work -->
+    <section class="future">
+        <div class="container">
+            <h2 class="section-title">Future Enhancements</h2>
+            <p class="section-subtitle">Roadmap for production-ready deployment</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">🚀</div>
+                    <div class="timeline-content">
+                        <h4>REST API Development</h4>
+                        <p>Build FastAPI endpoint for real-time inference with authentication, rate limiting, and comprehensive error handling.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">🐳</div>
+                    <div class="timeline-content">
+                        <h4>Containerization</h4>
+                        <p>Docker implementation for consistent deployment across environments with orchestration via Kubernetes or AWS ECS.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">📊</div>
+                    <div class="timeline-content">
+                        <h4>MLOps Pipeline</h4>
+                        <p>Implement CI/CD with GitHub Actions, model versioning with MLflow, and monitoring dashboards for production metrics.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">📱</div>
+                    <div class="timeline-content">
+                        <h4>Mobile Application</h4>
+                        <p>Develop cross-platform mobile app for on-site architectural classification in urban planning and tourism contexts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="margin-bottom: 15px; font-size: 1.1rem;"><strong>Ana Carolina Cladera Melgar</strong></p>
+            <p>Machine Learning Engineer | Backend Developer | Data Engineer</p>
+            <p style="margin-top: 20px;">
+                <a href="https://universe.roboflow.com/cloudcompute-sh6kq/architecture-classification-system-mdwfq" target="_blank">Live Project</a> | 
+                <a href="https://github.com" target="_blank">GitHub</a> | 
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+            </p>
+            <p style="margin-top: 25px; font-size: 0.9rem; opacity: 0.8;">
+                Developed as part of Cloud Computing Fundamentals coursework | Universidad Privada Boliviana
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and timeline items
+        document.querySelectorAll('.overview-card, .tech-item, .metric-card, .result-item, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
